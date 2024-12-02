@@ -18,6 +18,7 @@ const scrapeCategory = (browser, url) => new Promise(async (resolve, reject) => 
     })
     console.log("dataCategory: ", dataCategory)
     await page.close()
+    console.log("tab đã đóng")
     resolve()
 
   } catch (error) {
