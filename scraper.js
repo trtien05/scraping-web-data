@@ -136,4 +136,40 @@ const scraper = (browser, url) => new Promise(async (resolve, reject) => {
   }
 })
 
-module.exports = { scrapeCategory, scraper }
+const scrapeAddress = (browser, url) => new Promise(async (resolve, reject) => {
+  try {
+    let page = await browser.newPage()
+    console.log('>> Mở tab mới ...');
+    // Thiết lập vị trí giả lập (tuỳ chỉnh theo nhu cầu)
+    await page.setGeolocation({ latitude: 10.762622, longitude: 106.660172 }); // Hồ Chí Minh
+
+    // Gán quyền geolocation
+    const context = browser.defaultBrowserContext();
+
+    await context.overridePermissions(url, ['geolocation']);
+    await page.goto(url)
+    console.log('>>Truy cập vào ' + url)
+    await page.waitForSelector('#___gatsby')
+    console.log('>> Website đã load xong...');
+    // Cho phép quyền "geolocation" cho URL
+
+    // const dataCategory = await page.$$eval('.pt123__nav > ul > li', item => {
+    //   const dataCategory = item.map((item) => {
+    //     return {
+    //       category: item.querySelector('a').innerText,
+    //       link: item.querySelector('a').getAttribute('href')
+    //     }
+    //   })
+    //   return dataCategory
+    // })
+    // await page.close()
+    // console.log("tab đã đóng")
+    // resolve(dataCategory)
+
+  } catch (error) {
+    console.log('lỗi ở scrape address: ' + error)
+    reject(error)
+  }
+})
+
+module.exports = { scrapeCategory, scraper, scrapeAddress }

@@ -17,7 +17,6 @@ const scrapeController = async (browserInstance) => {
     })
   } catch (error) {
     console.log("lỗi ở scrapeController: " + error)
-
   }
 }
 module.exports = scrapeController
